@@ -1,0 +1,14 @@
+- name: Provision dev machine
+  hosts: all
+  vars_files:
+    - vars.yaml
+  tasks:
+    - name: provision base resources
+      include_role:
+        name: base
+
+    - name: provision additional resourcess
+      include_role:
+        name: "{{ item.key }}"
+      when: item.value.include
+      loop: "{{ lookup('dict', provision_roles) }}"

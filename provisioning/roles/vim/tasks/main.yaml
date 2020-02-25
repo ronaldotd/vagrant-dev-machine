@@ -1,0 +1,39 @@
+- name: create package manager start dir
+  become: yes
+  become_user: "{{ os_user }}"
+  file:
+    path: ~/.vim/pack/{{ os_user }}/start
+    state: directory
+
+- name: create package manager opt dir
+  become: yes
+  become_user: "{{ os_user }}"
+  file:
+    path: ~/.vim/pack/{{ os_user }}/opt
+    state: directory
+
+- name: copy .vimrc
+  become: yes
+  become_user: "{{ os_user }}"
+  copy:
+    src: .vimrc
+    dest: ~/.vimrc
+
+- name: install vim plugins
+  become: yes
+  become_user: "{{ os_user }}"
+  git:
+    repo: "{{ plugin.repo }}"
+    dest: ~/.vim/pack/{{ os_user }}/start/{{ plugin.name }}
+  loop:
+    - { name: "fzf", repo: "https://github.com/junegunn/fzf" }
+    - { name: "fzf.vim", repo: "https://github.com/junegunn/fzf.vim" }
+    - { name: "jedi-vim", repo: "https://github.com/davidhalter/jedi-vim" }
+    - { name: "nerdtree", repo: "https://github.com/scrooloose/nerdtree" }
+    - { name: "papercolor-theme", repo: "https://github.com/NLKNguyen/papercolor-theme" }
+    - { name: "vim-airline", repo: "https://github.com/vim-airline/vim-airline" }
+    - { name: "vim-flake8", repo: "https://github.com/nvie/vim-flake8" }
+    - { name: "vim-fugitive", repo: "https://github.com/tpope/vim-fugitive" }
+    - { name: "vim-gitgutter", repo: "https://github.com/airblade/vim-gitgutter"}
+  loop_control:
+    loop_var: plugin

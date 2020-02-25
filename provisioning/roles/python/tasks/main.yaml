@@ -1,0 +1,63 @@
+- name: install packages required for building python
+  become: yes
+  apt:
+    pkg:
+      - build-essential
+      - curl
+      - git
+      - libffi-dev
+      - liblzma-dev
+      - libncurses5-dev
+      - libncursesw5-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - libssl-dev
+      - libbz2-dev
+      - llvm
+      - make
+      - python-openssl
+      - tk-dev
+      - wget
+      - xz-utils
+      - zlib1g-dev
+
+- name: clone pyenv
+  become: yes
+  become_user: "{{ os_user }}"
+  git:
+    repo: https://github.com/pyenv/pyenv.git
+    dest: ~/.pyenv
+
+- name: add pyenv variables to bash
+  become: yes
+  become_user: "{{ os_user }}"
+  blockinfile:
+    path: ~/.bashrc
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - pyenv"
+    block: |
+      export PYENV_ROOT="$HOME/.pyenv"
+      export PATH="$PYENV_ROOT/bin:$PATH" 
+      eval "$(pyenv init -)"
+
+- name: create dir for virtualenvs
+  become: yes
+  become_user: "{{ os_user }}"
+  file:
+    path: ~/.virtualenvs
+    state: directory
+
+- name: install virtualenvwrapper
+  become: yes
+  pip:
+    name: virtualenvwrapper
+
+- name: add virtualenvwrapper variables to bash
+  become: yes
+  become_user: "{{ os_user }}"
+  blockinfile:
+    path: ~/.bashrc
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - virtualenvwrapper"
+    block: |
+      export WORKON_HOME=~/.virtualenvs
+      export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+      source /usr/local/bin/virtualenvwrapper.sh

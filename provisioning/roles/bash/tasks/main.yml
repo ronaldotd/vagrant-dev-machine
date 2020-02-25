@@ -1,0 +1,14 @@
+- name: download bash-powerline
+  become: yes
+  become_user: "{{ os_user }}"
+  get_url:
+    url: https://raw.githubusercontent.com/ronaldotd/bash-powerline/master/bash-powerline.sh
+    dest: ~/.bash_powerline.sh
+
+- name: add bash-powerline to bashrc
+  become: yes
+  become_user: "{{ os_user }}"
+  blockinfile:
+    path: ~/.bashrc
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - bash-powerline"
+    block: source .bash_powerline.sh

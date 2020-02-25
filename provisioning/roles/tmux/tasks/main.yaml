@@ -1,0 +1,35 @@
+- name: clone oh-my-tmux
+  become: yes
+  become_user: "{{ os_user }}"
+  git:
+    repo: "https://github.com/gpakosz/.tmux"
+    dest: ~/.tmux
+
+- name: create symbolik link for tmux conf
+  become: yes
+  become_user: "{{ os_user }}"
+  file:
+   src: ~/.tmux/.tmux.conf
+   dest: ~/.tmux.conf
+   state: link
+
+- name: copy tmux local confs
+  become: yes
+  become_user: "{{ os_user }}"
+  copy:
+    src: .tmux.conf.local
+    dest: ~/.tmux.conf.local
+
+- name: install tmate
+  become: yes
+  apt:
+    name: tmate
+  become_user: root
+
+- name: copy tmate conf
+  become: yes
+  become_user: "{{ os_user }}"
+  copy:
+    src: .tmate.conf
+    dest: ~/.tmate.conf
+    mode: 0644

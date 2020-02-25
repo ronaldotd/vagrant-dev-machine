@@ -1,0 +1,16 @@
+authorized_keys_url: ""
+
+os_user: "user"
+os_pass: "password"
+
+provision_roles:
+  bash:
+    include: true
+  python:
+    include: true
+  tmux:
+    include: true
+  tools:
+    include: true
+  vim:
+    include: true

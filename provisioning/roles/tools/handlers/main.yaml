@@ -1,0 +1,21 @@
+- name: install fzf
+  become: yes
+  become_user: "{{ os_user }}"
+  shell: ./install --all
+  args:
+    chdir: ~/.fzf/
+    executable: /bin/bash
+
+- name: install dry
+  become: yes
+  shell: ./dryup.sh
+  args:
+    chdir: /tmp/
+  listen: "dry setup"
+
+- name: change dry bin permissions
+  become: yes
+  file:
+    path: /usr/local/bin/dry
+    mode: 0755
+  listen: "dry setup"

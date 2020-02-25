@@ -1,0 +1,50 @@
+- name: install tools (apt)
+  become: yes
+  apt:
+    pkg:
+      - silversearcher-ag
+      - tree
+
+- name: clone fzf repo
+  become: yes
+  become_user: "{{ os_user }}"
+  git:
+    repo: https://github.com/junegunn/fzf
+    dest: ~/.fzf
+  notify:
+    - install fzf
+
+- name: get dry installer
+  become: yes
+  get_url:
+    url: https://moncho.github.io/dry/dryup.sh
+    dest: /tmp/dryup.sh
+    mode: 744
+  notify:
+    - "dry setup"
+
+- name: install pipx
+  become: yes
+  pip:
+    name: pipx
+    executable: pip3
+
+- name: install utils with pipx
+  become: yes
+  become_user: "{{ os_user }}"
+  shell: pipx install {{ pkg }}
+  args:
+    executable: /bin/bash
+  loop:
+    - httpie
+    - ansible
+    - pipenv
+  loop_control:
+    loop_var: pkg
+
+- name: inject docker-compose into ansible venv
+  become: yes
+  become_user: "{{ os_user }}"
+  shell: pipx inject ansible docker-compose
+  args:
+    executable: /bin/bash
