@@ -3,6 +3,9 @@ authorized_keys_url: ""
 os_user: "user"
 os_pass: "password"
 
+git_user: "Git User"
+git_email: "git@github.com"
+
 provision_roles:
   bash:
     include: true
