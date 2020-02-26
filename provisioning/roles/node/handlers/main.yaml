@@ -2,4 +2,5 @@
   shell: ./nvm_install.sh
   args:
     chdir: /tmp/
+    executable: /bin/bash
   listen: "nvm setup"
