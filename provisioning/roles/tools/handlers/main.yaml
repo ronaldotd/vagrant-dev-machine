@@ -1,6 +1,4 @@
 - name: install fzf
-  become: yes
-  become_user: "{{ os_user }}"
   shell: ./install --all
   args:
     chdir: ~/.fzf/

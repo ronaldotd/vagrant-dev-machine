@@ -22,15 +22,11 @@
       - zlib1g-dev
 
 - name: clone pyenv
-  become: yes
-  become_user: "{{ os_user }}"
   git:
     repo: https://github.com/pyenv/pyenv.git
     dest: ~/.pyenv
 
 - name: add pyenv variables to bash
-  become: yes
-  become_user: "{{ os_user }}"
   blockinfile:
     path: ~/.bashrc
     marker: "# {mark} ANSIBLE MANAGED BLOCK - pyenv"
@@ -40,20 +36,15 @@
       eval "$(pyenv init -)"
 
 - name: create dir for virtualenvs
-  become: yes
-  become_user: "{{ os_user }}"
   file:
     path: ~/.virtualenvs
     state: directory
 
 - name: install virtualenvwrapper
-  become: yes
   pip:
     name: virtualenvwrapper
 
 - name: add virtualenvwrapper variables to bash
-  become: yes
-  become_user: "{{ os_user }}"
   blockinfile:
     path: ~/.bashrc
     marker: "# {mark} ANSIBLE MANAGED BLOCK - virtualenvwrapper"

@@ -6,8 +6,6 @@
       - tree
 
 - name: clone fzf repo
-  become: yes
-  become_user: "{{ os_user }}"
   git:
     repo: https://github.com/junegunn/fzf
     dest: ~/.fzf
@@ -30,21 +28,16 @@
     executable: pip3
 
 - name: install utils with pipx
-  become: yes
-  become_user: "{{ os_user }}"
-  shell: pipx install {{ pkg }}
+  shell: pipx install {{ item }}
   args:
     executable: /bin/bash
+    creates: "{{ ansible_env.HOME }}/.local/pipx/venvs/{{ item }}"
   loop:
     - httpie
     - ansible
     - pipenv
-  loop_control:
-    loop_var: pkg
 
 - name: inject docker-compose into ansible venv
-  become: yes
-  become_user: "{{ os_user }}"
   shell: pipx inject ansible docker-compose
   args:
     executable: /bin/bash

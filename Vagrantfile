@@ -1,11 +1,4 @@
-VAGRANT_COMMAND = ARGV[0]
-
 Vagrant.configure("2") do |config|
-  if VAGRANT_COMMAND == "ssh"
-    config.ssh.username = "ronaldotd"
-    config.ssh.private_key_path = "~/.ssh/id_rsa"
-  end
-
   config.vm.box = "hashicorp/bionic64"
   config.vm.hostname = "ocelot"
 

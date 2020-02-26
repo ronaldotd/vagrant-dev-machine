@@ -6,32 +6,24 @@
       - bash-completion
 
 - name: config user name
-  become: yes
-  become_user: "{{ os_user }}"
   git_config:
     name: user.name
     scope: global
     value: "{{ git_user }}"
 
 - name: config user email
-  become: yes
-  become_user: "{{ os_user }}"
   git_config:
     name: user.email
     scope: global
     value: "{{ git_email }}"
 
 - name: config core editor
-  become: yes
-  become_user: "{{ os_user }}"
   git_config:
     name: core.editor
     scope: global
     value: vim
 
 - name: config diff tool
-  become: yes
-  become_user: "{{ os_user }}"
   git_config:
     name: diff.tool
     scope: global

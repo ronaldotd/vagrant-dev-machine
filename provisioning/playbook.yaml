@@ -9,6 +9,8 @@
 
     - name: provision additional resourcess
       include_role:
-        name: "{{ item.key }}"
-      when: item.value.include
+        name: "{{ role.key }}"
+      when: role.value.include
       loop: "{{ lookup('dict', provision_roles) }}"
+      loop_control:
+        loop_var: role

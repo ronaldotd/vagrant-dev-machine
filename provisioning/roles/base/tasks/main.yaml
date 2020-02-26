@@ -20,32 +20,16 @@
       state: latest
       executable: pip3
 
-  - name: create user
-    become: yes
-    user:
-      name: "{{ os_user }}"
-      password: "{{ os_pass | password_hash('sha512') }}"
-      update_password: on_create
-      groups: sudo, docker
-      shell: /bin/bash
-
-  - name: copy authorized keys
-    become: yes
-    authorized_key:
-      user: "{{ os_user }}"
-      key: "{{ authorized_keys_url }}"
-    when: authorized_keys_url|length > 0
+  - name: install docker-compose
+    pip:
+      name: docker-compose
 
   - name: create ssh keys dir
-    become: yes
-    become_user: "{{ os_user }}"
     file:
       path: ~/.ssh
       state: directory
 
   - name: copy ssh keys
-    become: yes
-    become_user: "{{ os_user }}"
     copy:
       src: ~/.ssh/{{ item }}
       dest: ~/.ssh/{{ item }}
@@ -60,8 +44,6 @@
       name: America/Sao_Paulo
 
   - name: create sudo_as_admin_successful file
-    become: yes
-    become_user: "{{ os_user }}"
     copy:
       content: ""
       dest: ~/.sudo_as_admin_successful
