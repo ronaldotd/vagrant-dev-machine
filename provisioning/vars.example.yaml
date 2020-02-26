@@ -4,6 +4,10 @@ git_email: "git@github.com"
 provision_roles:
   bash:
     include: true
+  git:
+    include: true
+  node:
+    include: true
   python:
     include: true
   tmux:
