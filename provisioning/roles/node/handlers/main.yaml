@@ -1,0 +1,5 @@
+- name: install nvm
+  shell: ./nvm_install.sh
+  args:
+    chdir: /tmp/
+  listen: "nvm setup"
