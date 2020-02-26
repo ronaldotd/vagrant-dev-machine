@@ -51,4 +51,4 @@
     block: |
       export WORKON_HOME=~/.virtualenvs
       export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-      source ./.local/bin/virtualenvwrapper.sh
+      source ~/.local/bin/virtualenvwrapper.sh

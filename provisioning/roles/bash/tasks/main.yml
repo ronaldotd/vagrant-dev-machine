@@ -7,4 +7,4 @@
   blockinfile:
     path: ~/.bashrc
     marker: "# {mark} ANSIBLE MANAGED BLOCK - bash-powerline"
-    block: source .bash_powerline.sh
+    block: source ~/.bash_powerline.sh
