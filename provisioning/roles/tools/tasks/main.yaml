@@ -32,8 +32,10 @@
     executable: /bin/bash
     creates: "{{ ansible_env.HOME }}/.local/pipx/venvs/{{ item }}"
   loop:
-    - httpie
     - ansible
+    - awscli
+    - awscli-local
+    - httpie
     - pipenv
 
 - name: inject docker-compose into ansible venv
